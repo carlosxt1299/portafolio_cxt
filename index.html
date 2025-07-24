@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carlos Xuc - Desarrollador Full Stack</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800;900&family=Helvetica+Now+Text:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'opensans': ['"Open Sans"', 'sans-serif'],
+                        'helvetica': ['"Helvetica Now Text"', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
+                        // ... mantener tus animaciones existentes si las usas aquí
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: 0, transform: 'translateY(20px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                        },
+                        // ... mantener tus keyframes existentes
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Tus variables CSS del modo oscuro */
+        :root {
+            --bg-color: #F8F8F8;
+            --text-color: #1A1A1A;
+            --secondary-text-color: #555555;
+            --navbar-bg: #E0E0E0;
+            --navbar-text-color: #333333;
+            --navbar-active-color: #000000;
+            --link-color: #0000FF;
+            --button-bg: #007BFF;
+            --button-text: #FFFFFF;
+            --button-hover-bg: #0056b3;
+            --button-shadow: rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-mode {
+            --bg-color: #1A1A1A;
+            --text-color: #F8F8F8;
+            --secondary-text-color: #BBBBBB;
+            --navbar-bg: #333333;
+            --navbar-text-color: #DDDDDD;
+            --navbar-active-color: #FFFFFF;
+            --link-color: #88CCEE;
+            --button-bg: #5AA0C1; /* Color de botón adaptado para oscuro */
+            --button-text: #1A1A1A; /* Texto oscuro sobre botón claro en modo oscuro */
+            --button-hover-bg: #4A8CA0;
+            --button-shadow: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Estilos generales */
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Open Sans', sans-serif; /* Puedes establecer una fuente por defecto */
+        }
+        .main-hero-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px); /* Ajusta según la altura de tu header/footer */
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Botón CTA */
+        .cta-button {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            padding: 1rem 2rem;
+            border-radius: 9999px; /* Píldora */
+            font-weight: 700;
+            font-size: 1.125rem; /* text-lg */
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px var(--button-shadow);
+        }
+        .cta-button:hover {
+            background-color: var(--button-hover-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px var(--button-shadow);
+        }
+
+        /* Estilos para el botón de modo claro/oscuro (repetidos para consistencia si es en un archivo separado) */
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--navbar-text-color);
+            margin-left: 1rem;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .theme-toggle:hover {
+            opacity: 0.8;
+        }
+        .sun-icon, .moon-icon {
+            transition: opacity 0.3s ease;
+            position: absolute; /* Para superponerlos */
+        }
+        .sun-icon { opacity: 1; }
+        body.dark-mode .sun-icon { opacity: 0; }
+        .moon-icon { opacity: 0; }
+        body.dark-mode .moon-icon { opacity: 1; }
+
+        /* Otros estilos que tengas de tu About Me, asegúrate de que sean globales o estén en el CSS de About Me */
+        .navbar-bg {
+            background-color: var(--navbar-bg);
+            box-shadow: 0 4px 6px -1px var(--navbar-shadow), 0 2px 4px -2px var(--navbar-shadow);
+            border-radius: 9999px;
+        }
+        .navbar-link {
+            color: var(--navbar-text-color);
+            transition: color 0.3s ease, opacity 0.3s ease;
+        }
+        .navbar-active-link {
+            color: var(--navbar-active-color);
+            text-decoration-color: var(--navbar-active-color);
+        }
+        footer {
+            background-color: var(--navbar-bg);
+            color: var(--navbar-text-color);
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: auto;
+            border-top: 1px solid var(--line-color);
+        }
+        footer a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            text-decoration: underline;
+            color: var(--navbar-active-color);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <header class="fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-4 md:px-8">
+        <nav class="navbar-bg p-4 flex items-center justify-center space-x-6 md:space-x-10 shadow-lg max-w-lg w-full">
+            <a href="index.html" class="navbar-link font-helvetica text-lg md:text-xl font-medium navbar-active-link hover:opacity-80 transition-opacity">Inicio</a>
+            <a href="about.html" class="navbar-link font-helvetica text-lg md:text-xl font-medium hover:opacity-80 transition-opacity">About Me</a>
+            <a href="proyectos.html" class="navbar-link font-helvetica text-lg md:text-xl font-medium hover:opacity-80 transition-opacity">Proyectos</a>
+
+            <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+                <svg class="w-6 h-6 sun-icon" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 10a1 1 0 11-2 0h2zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 14.05a1 1 0 11-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zm1.414-9.9l-.707-.707a1 1 0 111.414-1.414l.707.707a1 1 0 01-1.414 1.414zM3 10a1 1 0 112 0H3z"></path>
+                </svg>
+                <svg class="w-6 h-6 moon-icon hidden" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <main class="flex-grow flex flex-col items-center w-full px-4 py-8 md:py-12">
+        <section class="main-hero-section">
+            <h1 class="font-opensans text-7xl md:text-9xl font-black mb-4 animate-fade-in-up" style="animation-delay: 0.2s;">
+                CARLOS
+            </h1>
+            <p class="font-helvetica text-3xl md:text-4xl font-light mb-6 animate-fade-in-up" style="animation-delay: 0.4s; color: var(--secondary-text-color);">
+                Desarrollador Full Stack | Creador de Experiencias Web
+            </p>
+            <p class="font-helvetica text-lg md:text-xl max-w-2xl mx-auto mb-10 animate-fade-in-up" style="animation-delay: 0.6s; color: var(--secondary-text-color);">
+                Transformando ideas en soluciones digitales robustas, elegantes y funcionales.
+            </p>
+            <a href="proyectos.html" class="cta-button animate-fade-in-up" style="animation-delay: 0.8s;">
+                Ver Mis Proyectos
+            </a>
+        </section>
+    </main>
+
+    <footer class="mt-auto py-6">
+        <p class="font-helvetica text-base">&copy; 2024 Carlos. Todos los derechos reservados. |
+            <a href="https://github.com/carlosxt1299" target="_blank" rel="noopener noreferrer">Visita mi GitHub</a>
+        </p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Lógica de modo Claro/Oscuro (igual que en tu archivo actual)
+            const themeToggle = document.getElementById('theme-toggle');
+            const sunIcon = themeToggle.querySelector('.sun-icon');
+            const moonIcon = themeToggle.querySelector('.moon-icon');
+
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                }
+                localStorage.setItem('theme', theme);
+            }
+
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else if (prefersDark) {
+                applyTheme('dark');
+            } else {
+                applyTheme('light');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                applyTheme(newTheme);
+            });
+        });
+    </script>
+</body>
+</html>

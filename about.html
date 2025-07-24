@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Carlos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800;900&family=Helvetica+Now+Text:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'opensans': ['"Open Sans"', 'sans-serif'],
+                        'helvetica': ['"Helvetica Now Text"', 'sans-serif'],
+                    },
+                    animation: {
+                        'scroll': 'scroll 25s linear infinite',
+                        'slide-up': 'slideUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'name-fade-out': 'fadeOut 0.3s ease-out forwards',
+                        'name-split': 'nameSplit 2s cubic-bezier(0.2, 0.8, 0.4, 1) forwards',
+                        'text-reveal': 'textReveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards'
+                    },
+                    keyframes: {
+                        scroll: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: 0, transform: 'translateY(30px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' }
+                        },
+                        fadeOut: {
+                            '0%': { opacity: 1 },
+                            '100%': { opacity: 0, visibility: 'hidden' }
+                        },
+                        nameSplit: {
+                            '0%': {
+                                letterSpacing: '0',
+                                gap: '0',
+                                opacity: 0
+                            },
+                            '10%': {
+                                opacity: 1
+                            },
+                            '40%': {
+                                letterSpacing: '0',
+                                gap: '0',
+                            },
+                            '100%': {
+                                letterSpacing: '0.5rem',
+                                gap: '9rem',
+                            }
+                        },
+                        textReveal: {
+                            '0%': {
+                                opacity: 0,
+                                transform: 'translateY(20px) scale(0.98)'
+                            },
+                            '100%': {
+                                opacity: 1,
+                                transform: 'translateY(0) scale(1)'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+        .skills-container {
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+        }
+        .name-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            will-change: transform, opacity;
+        }
+        .absolute-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        #fullName {
+            z-index: 2;
+            white-space: nowrap;
+        }
+        #splitName {
+            z-index: 1;
+        }
+        #centerText {
+            width: 280px;
+            text-align: center;
+        }
+
+        /* --- Variables CSS para el tema --- */
+        :root { /* Modo Claro por defecto */
+            --bg-color: #F8F8F8;
+            --text-color: #1A1A1A;
+            --secondary-text-color: #555555;
+            --line-color: #CCCCCC;
+            --navbar-bg: #E0E0E0;
+            --navbar-text-color: #333333;
+            --navbar-active-color: #000000;
+            --navbar-shadow: rgba(0, 0, 0, 0.1);
+            --link-color: #0000FF;
+            --section-text-color: #333333;
+        }
+
+        body.dark-mode {
+            --bg-color: #1A1A1A; /* Fondo más oscuro */
+            --text-color: #F8F8F8; /* Blanco brillante para texto principal */
+            --secondary-text-color: #BBBBBB; /* Gris más claro para texto secundario/descripciones */
+            --line-color: #444444; /* Líneas divisorias en gris oscuro */
+            --navbar-bg: #333333;
+            --navbar-text-color: #DDDDDD;
+            --navbar-active-color: #FFFFFF;
+            --navbar-shadow: rgba(255, 255, 255, 0.1);
+            --link-color: #88CCEE; /* Un azul más suave para enlaces en modo oscuro */
+            --section-text-color: #F8F8F8;
+        }
+
+        /* --- Aplicación de variables a los elementos --- */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color); /* Asegura que el color principal del texto se adapte */
+        }
+
+        h1, h2, #fullName, #splitName span {
+            color: var(--text-color);
+        }
+        /* Aplica secondary-text-color a los párrafos y descripciones */
+        #centerText p, .tech-details-col p {
+            color: var(--secondary-text-color);
+        }
+        #centerText div { /* Línea debajo del texto central */
+            background-color: var(--line-color);
+        }
+        .skills-container .font-helvetica { /* Texto de la barra de habilidades */
+            color: var(--secondary-text-color);
+        }
+
+        /* Barra de navegación */
+        .navbar-bg {
+            background-color: var(--navbar-bg);
+            box-shadow: 0 4px 6px -1px var(--navbar-shadow), 0 2px 4px -2px var(--navbar-shadow);
+            border-radius: 9999px;
+        }
+        .navbar-link {
+            color: var(--navbar-text-color);
+            transition: color 0.3s ease, opacity 0.3s ease;
+        }
+        .navbar-active-link {
+            color: var(--navbar-active-color);
+            text-decoration-color: var(--navbar-active-color);
+        }
+
+        /* Estilo para el botón de modo claro/oscuro */
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--navbar-text-color); /* El color del icono debe cambiar con el tema de la navbar */
+            margin-left: 1rem;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .theme-toggle:hover {
+            opacity: 0.8;
+        }
+
+        .sun-icon, .moon-icon {
+            transition: opacity 0.3s ease;
+        }
+
+        .sun-icon {
+            opacity: 1;
+        }
+
+        body.dark-mode .sun-icon {
+            opacity: 0;
+        }
+
+        .moon-icon {
+            opacity: 0;
+            position: absolute; /* Para que no ocupe espacio cuando está oculto */
+        }
+
+        body.dark-mode .moon-icon {
+            opacity: 1;
+        }
+
+
+        /* Sección de Tecnologías con Foto al lado */
+        .tech-photo-section {
+            border-radius: 0.5rem;
+            margin: 2rem auto;
+            max-width: 95%;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            /* El color del texto principal de la sección */
+            color: var(--text-color);
+        }
+        @media (min-width: 768px) {
+            .tech-photo-section {
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 3rem;
+                padding: 2.5rem 3.5rem;
+            }
+            .tech-photo-col {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                flex-shrink: 0;
+                padding-right: 2rem;
+                border-right: 1px solid var(--line-color); /* Border de la columna de la foto */
+                height: auto;
+                flex-basis: 45%;
+                max-width: 45%;
+            }
+            .tech-details-col {
+                flex-grow: 1;
+                padding-left: 1rem;
+                flex-basis: 55%;
+                max-width: 55%;
+            }
+        }
+
+        .profile-container {
+            width: 280px; /* Imagen más grande */
+            height: 280px;
+            border-radius: 9999px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .profile-picture {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(0%);
+        }
+
+        /* Nombre simple sin fondo ni borde */
+        .name-overlay {
+            position: absolute;
+            top: -0.5rem; /* Ajustado para más arriba */
+            left: 0;
+            color: var(--text-color); /* Asegura que el color del nombre cambie con el tema */
+            font-family: 'Helvetica Now Text', sans-serif;
+            font-weight: 500;
+            line-height: 1.1; /* Más compacto */
+            z-index: 10;
+            font-size: 1.2rem; /* Ligeramente más grande */
+        }
+        .name-overlay span {
+            display: block;
+        }
+
+        /* Estilos para las tecnologías */
+        .technologies-list li {
+            padding: 0.5rem 0.8rem; /* Añadido padding horizontal para mejor hover */
+            line-height: 1.5;
+            color: var(--secondary-text-color); /* Color por defecto para la descripción */
+            transition: background-color 0.3s ease; /* Transición suave para el fondo */
+            border-radius: 4px; /* Bordes redondeados para el hover */
+            margin: 0.2rem 0; /* Espaciado entre elementos para que el hover no se "pegue" */
+            cursor: pointer;
+        }
+        .technologies-list li:not(:last-child) {
+            border-bottom: 1px solid var(--line-color);
+        }
+        .technologies-list li span {
+            color: var(--text-color); /* Color por defecto para el nombre de la tecnología (HTML5, Python, etc.) */
+            font-weight: bold; /* Mantenemos el negrita */
+        }
+
+        /* Efecto hover: solo cambia el fondo del li */
+        .technologies-list li:hover {
+            background-color: rgba(0, 0, 0, 0.05); /* Gris muy claro para modo claro */
+            color: var(--secondary-text-color); /* Mantiene el color de la descripción en hover */
+        }
+        body.dark-mode .technologies-list li:hover {
+            background-color: rgba(255, 255, 255, 0.05); /* Gris muy claro para modo oscuro */
+        }
+
+        /* Asegurar que el texto dentro del span no cambie de color al hacer hover */
+        .technologies-list li:hover span {
+            color: var(--text-color); /* Mantiene el color del nombre de la tecnología en hover */
+        }
+
+        /* Estilos del footer */
+        footer {
+            background-color: var(--navbar-bg);
+            color: var(--navbar-text-color);
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: auto;
+            border-top: 1px solid var(--line-color);
+        }
+        footer a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            text-decoration: underline;
+            color: var(--navbar-active-color);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <header class="fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-4 md:px-8">
+        <nav class="navbar-bg p-4 flex items-center justify-center space-x-6 md:space-x-10 shadow-lg max-w-lg w-full">
+            <a href="index.html" class="navbar-link font-helvetica text-lg md:text-xl font-medium hover:opacity-80 transition-opacity">Inicio</a>
+            <a href="about.html" class="navbar-link font-helvetica text-lg md:text-xl font-medium navbar-active-link hover:opacity-80 transition-opacity">About Me</a>
+            <a href="proyectos.html" class="navbar-link font-helvetica text-lg md:text-xl font-medium hover:opacity-80 transition-opacity">Proyectos</a>
+
+            <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+                <svg class="w-6 h-6 sun-icon" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 10a1 1 0 11-2 0h2zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 14.05a1 1 0 11-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zm1.414-9.9l-.707-.707a1 1 0 111.414-1.414l.707.707a1 1 0 01-1.414 1.414zM3 10a1 1 0 112 0H3z"></path>
+                </svg>
+                <svg class="w-6 h-6 moon-icon hidden" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <main class="flex-grow flex flex-col items-center w-full px-4 py-8 md:py-12 mt-20">
+        <h1 class="font-opensans text-6xl md:text-8xl font-black mb-6 md:mb-10 animate-slide-up" style="animation-delay: 0.2s">ABOUT</h1>
+
+        <div class="my-8 md:my-12 w-full name-container">
+            <div id="fullName" class="absolute-center font-opensans text-7xl md:text-9xl font-black">
+                CARLOS
+            </div>
+
+            <div id="splitName" class="hidden absolute-center">
+                <div class="flex items-center">
+                    <span class="font-opensans text-7xl md:text-9xl font-black">CAR</span>
+
+                    <div id="centerText" class="mx-4 opacity-0">
+                        <p class="font-helvetica text-base md:text-lg leading-snug animate-text-reveal" style="animation-delay: 0.5s">
+                            ¡Hola! Soy Carlos, desarrollador web Full Stack.
+                            Creo soluciones innovadoras con código limpio.
+                        </p>
+                        <div class="w-full h-px my-2 animate-text-reveal" style="animation-delay: 0.8s"></div>
+                    </div>
+
+                    <span class="font-opensans text-7xl md:text-9xl font-black">LOS</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="skills-container mt-6 md:mt-10 mb-8 md:mb-12 overflow-hidden py-2">
+            <div class="font-helvetica text-lg md:text-2xl whitespace-nowrap animate-scroll">
+                <span class="inline-block mx-8 md:mx-12">Frontend</span>
+                <span class="inline-block mx-8 md:mx-12">Backend</span>
+                <span class="inline-block mx-8 md:mx-12">React</span>
+                <span class="inline-block mx-8 md:mx-12">Node.js</span>
+                <span class="inline-block mx-8 md:mx-12">TypeScript</span>
+                <span class="inline-block mx-8 md:mx-12">UI/UX</span>
+                <span class="inline-block mx-8 md:mx-12">Clean Code</span>
+                <span class="inline-block mx-8 md:mx-12">Problem Solver</span>
+                <span class="inline-block mx-8 md:mx-12">Frontend</span>
+                <span class="inline-block mx-8 md:mx-12">Backend</span>
+                <span class="inline-block mx-8 md:mx-12">React</span>
+                <span class="inline-block mx-8 md:mx-12">Node.js</span>
+            </div>
+        </div>
+
+        <section class="tech-photo-section">
+            <div class="tech-photo-col">
+                <div class="name-overlay">
+                    <span>Carlos</span>
+                    <span>Xuc</span>
+                </div>
+                <div class="profile-container">
+                    <img src="img/yo.jpg" alt="Tu Foto de Perfil" class="profile-picture">
+                </div>
+            </div>
+
+            <div class="tech-details-col">
+                <h2 class="font-opensans text-3xl md:text-4xl font-bold mb-4">Tecnologías y Experiencia</h2>
+                <p class="font-helvetica text-base md:text-lg mb-6">
+                    Como desarrollador full-stack, mi experiencia abarca un amplio rango de tecnologías, lo que me permite construir aplicaciones robustas y eficientes de principio a fin. Me apasiona resolver problemas complejos y aprender continuamente las últimas tendencias del desarrollo web.
+                </p>
+                <ul class="technologies-list font-helvetica text-base md:text-lg">
+                    <li><span class="font-bold">HTML5:</span> Creación de estructuras web semánticas y accesibles.</li>
+                    <li><span class="font-bold">Python:</span> Desarrollo backend robusto con Django y Flask para APIs y lógica de negocio.</li>
+                    <li><span class="font-bold">React.js:</span> Construcción de interfaces de usuario dinámicas y modernas.</li>
+                    <li><span class="font-bold">JavaScript (ES6+):</span> Lógica interactiva en el frontend.</li>
+                    <li><span class="font-bold">Bases de Datos:</span> Gestión de datos con MySQL, PostgreSQL y MongoDB para diversas necesidades de persistencia.</li>
+                    <li><span class="font-bold">Estudios:</span> Cuarto año de Ing. en Sistemas</li>
+
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="mt-auto py-6">
+        <p class="font-helvetica text-base">&copy; 2024 Carlos. Todos los derechos reservados. |
+            <a href="https://github.com/carlosxt1299" target="_blank" rel="noopener noreferrer">Visita mi GitHub</a>
+        </p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fullName = document.getElementById('fullName');
+            const splitName = document.getElementById('splitName');
+            const centerText = document.getElementById('centerText');
+            const splitNameInner = splitName.querySelector('div');
+            const themeToggle = document.getElementById('theme-toggle');
+            const sunIcon = themeToggle.querySelector('.sun-icon');
+            const moonIcon = themeToggle.querySelector('.moon-icon');
+
+            // --- Lógica de la animación del nombre ---
+            setTimeout(() => {
+                fullName.classList.add('animate-name-fade-out');
+
+                fullName.addEventListener('animationend', (event) => {
+                    if (event.animationName === 'fadeOut') {
+                        fullName.classList.add('hidden');
+                        fullName.classList.remove('animate-name-fade-out');
+
+                        splitName.classList.remove('hidden');
+                        splitNameInner.classList.add('animate-name-split');
+
+                        setTimeout(() => {
+                            centerText.style.opacity = '1';
+                        }, 1000);
+                    }
+                }, { once: true });
+            }, 1000);
+
+            // --- Lógica de modo Claro/Oscuro ---
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                }
+                localStorage.setItem('theme', theme);
+            }
+
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else if (prefersDark) {
+                applyTheme('dark');
+            } else {
+                applyTheme('light');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                applyTheme(newTheme);
+            });
+        });
+    </script>
+</body>
+</html>
